@@ -1,0 +1,126 @@
+---
+title: "pooled estimate comparison"
+author: "Andrew Mertens"
+date: "June 13, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(here)
+library(tidyverse)
+library(metafor)
+df <- readRDS(file=here("results/pooled_results.Rdata"))
+df$cat <- factor(df$cat, levels=c("Overall", "Everyday Public Conservation", "Household conservation", "Green consumerism", "FFA" ))
+df$type <- factor(df$type, levels=c("Subjective only","Subjective + Descriptive","Subjective + Personal", "Subjective, Descriptive, + Personal"))
+df$normcat <- factor(df$normcat, levels=c("Subjective","Descriptive","Personal"))
+
+```
+
+## Is the overall pooled estimate for subjective-norms-only different from the overall estimate for subjective norms when other norms are included?
+
+
+```{r, echo=F}
+df.overall <- df %>% filter(cat=="Overall" & (normcat=="Subjective" | is.na(normcat)))
+
+#rma.mv(est, vi, mods = ~ type, random = ~ type | id, struct="DIAG", data=df.overall, digits=3)
+res1 <- rma(yi=est, vi=vi, mods = ~ type, method="FE", data=df.overall, digits=3)
+res1
+```
+
+
+## Comparing categories within subjective only
+
+```{r, echo=F}
+df.subjective <- df %>% filter(type=="Subjective only") 
+res2 <- rma(yi=est, vi=vi, mods = ~ cat, method="FE", data=df.subjective, digits=3)
+res2
+```
+
+## Comparing subjective, descriptive, personal within ("subjective " is the reference category) 
+
+### Subjective + Descriptive
+
+##### Overall
+
+
+```{r, echo=F}
+df.SD <- df %>% filter(type=="Subjective + Descriptive")
+unique(df.SD$cat)
+resSD_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Overall",], digits=3)
+resSD_overall
+```
+
+##### Household conservation
+
+```{r, echo=F}
+resSD_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Household conservation",], digits=3)
+resSD_HC
+```
+
+##### Green consumerism
+
+```{r, echo=F}
+resSD_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Green consumerism",], digits=3)
+resSD_GC
+```
+
+### Subjective + Personal
+
+##### Overall
+
+```{r, echo=F}
+df.SP <- df %>% filter(type=="Subjective + Personal")
+unique(df.SP$cat)
+resSP_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="Overall",], digits=3)
+resSP_overall
+```
+
+##### Household conservation
+
+```{r, echo=F}
+resSP_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="Household conservation",], digits=3)
+resSP_HC
+```
+
+##### Green consumerism
+
+```{r, echo=F}
+resSP_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="Green consumerism",], digits=3)
+resSP_GC
+```
+
+##### FFA
+
+```{r, echo=F}
+resSP_FFA <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="FFA",], digits=3)
+resSP_FFA
+```
+
+# Subjective, Descriptive, + Personal
+
+##### Overall
+
+
+```{r, echo=F}
+df.all <- df %>% filter(type=="Subjective, Descriptive, + Personal")
+unique(df.all$cat)
+resall_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.all[df.all$cat=="Overall",], digits=3)
+resall_overall
+```
+
+##### Household conservation
+
+```{r, echo=F}
+resall_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.all[df.all$cat=="Household conservation",], digits=3)
+resall_HC
+```
+
+##### Green consumerism
+
+```{r, echo=F}
+resall_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.all[df.all$cat=="Green consumerism",], digits=3)
+resall_GC
+```
+

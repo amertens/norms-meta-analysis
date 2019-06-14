@@ -24,9 +24,10 @@ d.SN <- d.SN %>% fill("Folder","Paper title","Reason for not including",
 
 #clean up for meta-analysis
 colnames(d.SN)
-d.SN <- d.SN %>% select(Category, `Paper title`, `Effect Size of Subjective Norms`, `P-value`, `Significant?`, `Standard Deviation`, `Standard Error`,`T statistic`, `Additional Notes`) %>%
+d.SN <- d.SN %>% select(Category, `Paper title`, `N (number surveyed)`, `Effect Size of Subjective Norms`, `P-value`, `Significant?`, `Standard Deviation`, `Standard Error`,`T statistic`, `Additional Notes`) %>%
            rename(study = `Paper title`,
                   cat = Category,
+                  n= `N (number surveyed)`,
                   est = `Effect Size of Subjective Norms`,
                   pval = `P-value`,
                   pcat = `Significant?`,
@@ -59,10 +60,11 @@ d.PN <- d.PN %>% fill("Folder","Paper title","Reason for not including",
 
 #clean up for meta-analysis
 colnames(d.PN)
-d.PN <- d.PN %>% select(Category, `Paper title`,`Type of Norm`, `Effect Size`, `Significant?`, `Standard Deviation`, `Standard Error`,`T-Value`, `Notes`) %>%
+d.PN <- d.PN %>% select(Category, `Paper title`,`Type of Norm`,`N (number surveyed)`, `Effect Size`, `Significant?`, `Standard Deviation`, `Standard Error`,`T-Value`, `Notes`) %>%
   rename(study = `Paper title`,
          cat = Category,
          normcat = `Type of Norm`,
+         n= `N (number surveyed)`,
          est = `Effect Size`,
          pcat = `Significant?`,
          sd = `Standard Deviation`,
@@ -96,10 +98,11 @@ d.DN <- d.DN %>% fill("Folder","Paper title","Reason for not including",
 
 #clean up for meta-analysis
 colnames(d.DN)
-d.DN <- d.DN %>% select(Category, `Paper title`, `Type of Norm`, `Effect Size`, `Significant?`, `Standard Deviation`, `Standard Error`) %>%
+d.DN <- d.DN %>% select(Category, `Paper title`, `Type of Norm`,`N (number surveyed)`, `Effect Size`, `Significant?`, `Standard Deviation`, `Standard Error`) %>%
   rename(study = `Paper title`,
          cat = Category,
          normcat = `Type of Norm`,
+         n= `N (number surveyed)`,
          est = `Effect Size`,
          pcat = `Significant?`,
          sd = `Standard Deviation`,
@@ -127,10 +130,11 @@ d.all <- d.all %>% fill("Folder","Paper title","Reason for not including",
 
 #clean up for meta-analysis
 colnames(d.all)
-d.all <- d.all %>% select(Category, `Paper title`,`Type of norm`, `Effect Size`, `Significant?`, `Standard Deviation`, `Standard Error`,`T-Value`, `Notes`) %>%
+d.all <- d.all %>% select(Category, `Paper title`,`Type of norm`, `N (number surveyed)`, `Effect Size`, `Significant?`, `Standard Deviation`, `Standard Error`,`T-Value`, `Notes`) %>%
   rename(study = `Paper title`,
          cat = Category,
          normcat = `Type of norm`,
+         n= `N (number surveyed)`,
          est = `Effect Size`,
          pcat = `Significant?`,
          sd = `Standard Deviation`,
@@ -189,9 +193,9 @@ ggsave(p.DN, file=paste0(here(),"/figures/forest_subject_descriptive_norms.jpg")
 ggsave(p.all, file=paste0(here(),"/figures/forest_subject_personal_descriptive_norms.jpg"), height=h, width=w)
 
 
-#-------------------------------------------
-# Run statistical tests
-#-------------------------------------------
+#------------------------------------------------
+# Clean pooled data for statistical comparisons
+#------------------------------------------------
 
 df <- bind_rows(data.frame(resSN$plotdf, type="Subjective only"),
                 data.frame(resDN$plotdf, type="Subjective + Descriptive"),
@@ -204,57 +208,9 @@ df$normcat2 <- gsub("NA: ","", df$normcat2)
 head(df)
 
 df$cat <- factor(df$cat, levels=c("Overall", "Everyday Public Conservation", "Household conservation", "Green consumerism", "FFA" ))
+df$type <- factor(df$type, levels=c("Subjective only","Subjective + Descriptive","Subjective + Personal", "Subjective, Descriptive, + Personal"))
 
-#Is the overall estimate for subjective norms only different from the overall estimate for subjective norms
-#when other norms are included
-df.overall <- df %>% filter(cat=="Overall" & (normcat=="Subjective" | is.na(normcat)))
-df.overall$type <- factor(df.overall$type, levels=c("Subjective only","Subjective + Descriptive","Subjective + Personal", "Subjective, Descriptive, + Personal"))
-
-#rma.mv(est, vi, mods = ~ type, random = ~ type | id, struct="DIAG", data=df.overall, digits=3)
-res1 <- rma(yi=est, vi=vi, mods = ~ type, method="FE", data=df.overall, digits=3)
-res1
-
-
-
-#Comparing categories within subjective only
-df.subjective <- df %>% filter(type=="Subjective only") 
-res2 <- rma(yi=est, vi=vi, mods = ~ cat, method="FE", data=df.subjective, digits=3)
-res2
-
-#Comparing subjective, descriptive, personal ("subjective " is the reference category) 
-
-#subjective + descriptive
-df.SD <- df %>% filter(type=="Subjective + Descriptive")
-unique(df.SD$cat)
-resSD_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Overall",], digits=3)
-resSD_overall
-resSD_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Household conservation",], digits=3)
-resSD_HC
-resSD_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Green consumerism",], digits=3)
-resSD_GC
-
-#subjective + personal 
-df.SP <- df %>% filter(type=="Subjective + Personal")
-unique(df.SP$cat)
-resSP_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="Overall",], digits=3)
-resSP_overall
-resSP_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="Household conservation",], digits=3)
-resSP_HC
-resSP_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="Green consumerism",], digits=3)
-resSP_GC
-resSP_FFA <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SP[df.SP$cat=="FFA",], digits=3)
-resSP_FFA
-
-#subjective, descriptive, and personal  
-df.all <- df %>% filter(type=="Subjective, Descriptive, + Personal")
-unique(df.all$cat)
-resall_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.all[df.all$cat=="Overall",], digits=3)
-resall_overall
-resall_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.all[df.all$cat=="Household conservation",], digits=3)
-resall_HC
-resall_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.all[df.all$cat=="Green consumerism",], digits=3)
-resall_GC
-
+saveRDS(df, file=here("results/pooled_results.Rdata"))
 
 #-------------------------------------------
 # Plot pooled estimate comparison
