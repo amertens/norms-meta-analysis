@@ -17,15 +17,17 @@ rma_summary <- function(fit, cat){
 
 rma_robust <- function(data, yi, sei, method="REML", measure){
   fit<-NULL
-  if(method=="FE"){
-    fit<-rma(yi=data[[yi]], sei=data[[sei]], method="FE", measure="GEN")
-  }else{
-    try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="REML", measure="GEN"))
-    if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="ML", measure="GEN"))}
-    if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="HE", measure="GEN"))}
-    if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="DL", measure="GEN"))}
-    if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="EB", measure="GEN"))}
-    if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="SJ", measure="GEN"))}
+  if(length(is.na(data[[yi]])) > 1){
+    if(method=="FE"){
+      fit<-rma(yi=data[[yi]], sei=data[[sei]], method="FE", measure="GEN")
+    }else{
+      try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="REML", measure="GEN"))
+      if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="ML", measure="GEN"))}
+      if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="HE", measure="GEN"))}
+      if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="DL", measure="GEN"))}
+      if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="EB", measure="GEN"))}
+      if(is.null(fit)){try(fit<-rma(yi=data[[yi]], sei=data[[sei]], method="SJ", measure="GEN"))}
+    }
   }
   return(fit)
 }

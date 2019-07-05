@@ -15,7 +15,7 @@ source(paste0(here(),"/norms_meta_analysis_functions.R"))
 #Clean SN 0nly
 #-------------------------------------------
 
-d.SN <- read_excel(paste0(here(), "/data/Meta Analysis Clean Coding Sheet.xlsx"), sheet = "SN Only")
+d.SN <- read_excel(paste0(here(), "/data/Coding - Norms Paper.xlsx"), sheet = "SN Only")
 
 #fill in empty rows
 d.SN <- d.SN %>% fill("Folder","Paper title","Reason for not including",
@@ -51,7 +51,7 @@ d.SN <- d.SN %>% filter(is.na(Notes) | Notes != "unstandardized")
 #Clean SN and PN 0nly
 #-------------------------------------------
 
-d.PN <- read_excel(paste0(here(), "/data/Meta Analysis Clean Coding Sheet.xlsx"), sheet = "SN and PN")
+d.PN <- read_excel(paste0(here(), "/data/Coding - Norms Paper.xlsx"), sheet = "SN and PN")
 
 #fill in empty rows
 d.PN <- d.PN %>% fill("Folder","Paper title","Reason for not including",
@@ -89,7 +89,7 @@ d.PN <- d.PN %>% filter(is.na(Notes) | Notes != "unstandardized")
 #Clean SN and DN 0nly
 #-------------------------------------------
 
-d.DN <- read_excel(paste0(here(), "/data/Meta Analysis Clean Coding Sheet.xlsx"), sheet = "SN and DN")
+d.DN <- read_excel(paste0(here(), "/data/Coding - Norms Paper.xlsx"), sheet = "SN and DN")
 
 #fill in empty rows
 d.DN <- d.DN %>% fill("Folder","Paper title","Reason for not including",
@@ -121,7 +121,7 @@ d.DN <- d.DN %>% mutate(
 #Clean SN, PN, DN 0nly
 #-------------------------------------------
 
-d.all <- read_excel(paste0(here(), "/data/Meta Analysis Clean Coding Sheet.xlsx"), sheet = "SN, PN and DN")
+d.all <- read_excel(paste0(here(), "/data/Coding - Norms Paper.xlsx"), sheet = "SN, PN and DN")
 
 #fill in empty rows
 d.all <- d.all %>% fill("Folder","Paper title","Reason for not including",
@@ -332,10 +332,10 @@ p_all <- ggplot(df[df$type=="Subjective, Descriptive, + Personal" & !(df$cat %in
   guides(color=FALSE, shape=FALSE) 
 p_all
 
-ggsave(p_SN, file=paste0(here(),"/figures/pooled_estimate_comparisons_SN.jpg"), height=10, width=14)
-ggsave(p_PN, file=paste0(here(),"/figures/pooled_estimate_comparisons_PN.jpg"), height=10, width=14)
-ggsave(p_DN, file=paste0(here(),"/figures/pooled_estimate_comparisons_DN.jpg"), height=10, width=14)
-ggsave(p_all, file=paste0(here(),"/figures/pooled_estimate_comparisons_all.jpg"), height=10, width=14)
+ggsave(p_SN, file=paste0(here(),"/figures/pooled_estimate_comparisons_SN.jpg"), height=5, width=7)
+ggsave(p_PN, file=paste0(here(),"/figures/pooled_estimate_comparisons_PN.jpg"), height=5, width=7)
+ggsave(p_DN, file=paste0(here(),"/figures/pooled_estimate_comparisons_DN.jpg"), height=5, width=7)
+ggsave(p_all, file=paste0(here(),"/figures/pooled_estimate_comparisons_all.jpg"), height=5, width=7)
 
 
 

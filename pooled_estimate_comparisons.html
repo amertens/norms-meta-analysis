@@ -138,20 +138,20 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2:4): 
-## QM(df = 3) = 9.770, p-val = 0.021
+## QM(df = 3) = 32.951, p-val &lt; .001
 ## 
 ## Model Results:
 ## 
 ##                                          estimate     se    zval   pval
-## intrcpt                                     0.193  0.018  10.661  &lt;.001
-## typeSubjective + Descriptive               -0.076  0.041  -1.868  0.062
-## typeSubjective + Personal                   0.020  0.034   0.578  0.563
-## typeSubjective, Descriptive, + Personal    -0.118  0.050  -2.345  0.019
+## intrcpt                                     0.197  0.019  10.249  &lt;.001
+## typeSubjective + Descriptive               -0.080  0.041  -1.932  0.053
+## typeSubjective + Personal                  -0.012  0.035  -0.343  0.732
+## typeSubjective, Descriptive, + Personal    -0.162  0.030  -5.448  &lt;.001
 ##                                           ci.lb   ci.ub     
-## intrcpt                                   0.158   0.229  ***
-## typeSubjective + Descriptive             -0.156   0.004    .
-## typeSubjective + Personal                -0.047   0.086     
-## typeSubjective, Descriptive, + Personal  -0.216  -0.019    *
+## intrcpt                                   0.159   0.235  ***
+## typeSubjective + Descriptive             -0.160   0.001    .
+## typeSubjective + Personal                -0.081   0.057     
+## typeSubjective, Descriptive, + Personal  -0.220  -0.103  ***
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -165,22 +165,22 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2:5): 
-## QM(df = 4) = 11.595, p-val = 0.021
+## QM(df = 4) = 7.298, p-val = 0.121
 ## 
 ## Model Results:
 ## 
 ##                                  estimate     se    zval   pval   ci.lb
-## intrcpt                             0.193  0.018  10.661  &lt;.001   0.158
-## catEveryday Public Conservation    -0.101  0.056  -1.802  0.071  -0.211
-## catHousehold conservation          -0.048  0.038  -1.255  0.210  -0.123
-## catGreen consumerism                0.001  0.028   0.036  0.971  -0.054
-## catFFA                              0.074  0.035   2.093  0.036   0.005
+## intrcpt                             0.197  0.019  10.249  &lt;.001   0.159
+## catEveryday Public Conservation    -0.105  0.056  -1.854  0.064  -0.215
+## catHousehold conservation          -0.025  0.033  -0.758  0.448  -0.090
+## catGreen consumerism               -0.001  0.041  -0.025  0.980  -0.081
+## catFFA                              0.056  0.039   1.419  0.156  -0.021
 ##                                  ci.ub     
-## intrcpt                          0.229  ***
-## catEveryday Public Conservation  0.009    .
-## catHousehold conservation        0.027     
-## catGreen consumerism             0.056     
-## catFFA                           0.144    *
+## intrcpt                          0.235  ***
+## catEveryday Public Conservation  0.006    .
+## catHousehold conservation        0.040     
+## catGreen consumerism             0.079     
+## catFFA                           0.133     
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -262,8 +262,8 @@ $(document).ready(function () {
 <h3>Subjective + Personal</h3>
 <div id="overall-1" class="section level5">
 <h5>Overall</h5>
-<pre><code>## [1] FFA                          Everyday Public Conservation
-## [3] Overall                      Green consumerism           
+<pre><code>## [1] Everyday Public Conservation Overall                     
+## [3] Green consumerism            FFA                         
 ## [5] Household conservation      
 ## 5 Levels: Overall Everyday Public Conservation ... FFA</code></pre>
 <pre><code>## Warning in rma(yi = est, vi = vi, mods = ~normcat, method = &quot;FE&quot;, data =
@@ -275,13 +275,13 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2): 
-## QM(df = 1) = 0.747, p-val = 0.387
+## QM(df = 1) = 5.009, p-val = 0.025
 ## 
 ## Model Results:
 ## 
-##                  estimate     se   zval   pval   ci.lb  ci.ub     
-## intrcpt             0.213  0.028  7.479  &lt;.001   0.157  0.269  ***
-## normcatPersonal     0.033  0.038  0.864  0.387  -0.041  0.106     
+##                  estimate     se   zval   pval  ci.lb  ci.ub     
+## intrcpt             0.185  0.029  6.325  &lt;.001  0.128  0.242  ***
+## normcatPersonal     0.081  0.036  2.238  0.025  0.010  0.151    *
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -297,13 +297,13 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2): 
-## QM(df = 1) = 0.006, p-val = 0.938
+## QM(df = 1) = 0.022, p-val = 0.882
 ## 
 ## Model Results:
 ## 
-##                  estimate     se    zval   pval   ci.lb  ci.ub   
-## intrcpt             0.240  0.100   2.405  0.016   0.044  0.436  *
-## normcatPersonal    -0.009  0.111  -0.077  0.938  -0.226  0.208   
+##                  estimate     se   zval   pval   ci.lb  ci.ub   
+## intrcpt             0.230  0.103  2.232  0.026   0.028  0.431  *
+## normcatPersonal     0.016  0.109  0.149  0.882  -0.197  0.229   
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -319,13 +319,13 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2): 
-## QM(df = 1) = 1.005, p-val = 0.316
+## QM(df = 1) = 4.069, p-val = 0.044
 ## 
 ## Model Results:
 ## 
-##                  estimate     se   zval   pval   ci.lb  ci.ub     
-## intrcpt             0.229  0.041  5.529  &lt;.001   0.148  0.310  ***
-## normcatPersonal     0.051  0.051  1.002  0.316  -0.048  0.150     
+##                  estimate     se   zval   pval  ci.lb  ci.ub     
+## intrcpt             0.188  0.043  4.414  &lt;.001  0.104  0.271  ***
+## normcatPersonal     0.099  0.049  2.017  0.044  0.003  0.194    *
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -341,13 +341,13 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2): 
-## QM(df = 1) = 0.195, p-val = 0.659
+## QM(df = 1) = 0.543, p-val = 0.461
 ## 
 ## Model Results:
 ## 
-##                  estimate     se    zval   pval   ci.lb  ci.ub     
-## intrcpt             0.191  0.050   3.817  &lt;.001   0.093  0.288  ***
-## normcatPersonal    -0.066  0.149  -0.441  0.659  -0.357  0.226     
+##                  estimate     se   zval   pval   ci.lb  ci.ub     
+## intrcpt             0.197  0.055  3.579  &lt;.001   0.089  0.305  ***
+## normcatPersonal     0.119  0.161  0.737  0.461  -0.197  0.434     
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -358,7 +358,7 @@ $(document).ready(function () {
 <h1>Subjective, Descriptive, + Personal</h1>
 <div id="overall-2" class="section level5">
 <h5>Overall</h5>
-<pre><code>## [1] Household conservation Overall                Green consumerism     
+<pre><code>## [1] Green consumerism      Overall                Household conservation
 ## 5 Levels: Overall Everyday Public Conservation ... FFA</code></pre>
 <pre><code>## 
 ## Fixed-Effects with Moderators Model (k = 3)
@@ -367,14 +367,14 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2:3): 
-## QM(df = 2) = 6.076, p-val = 0.048
+## QM(df = 2) = 20.266, p-val &lt; .001
 ## 
 ## Model Results:
 ## 
-##                     estimate     se   zval   pval   ci.lb  ci.ub   
-## intrcpt                0.076  0.047  1.622  0.105  -0.016  0.167   
-## normcatDescriptive     0.135  0.063  2.141  0.032   0.011  0.259  *
-## normcatPersonal        0.155  0.075  2.073  0.038   0.008  0.302  *
+##                     estimate     se   zval   pval   ci.lb  ci.ub     
+## intrcpt                0.035  0.023  1.572  0.116  -0.009  0.080     
+## normcatDescriptive     0.166  0.046  3.582  &lt;.001   0.075  0.257  ***
+## normcatPersonal        0.210  0.064  3.303  &lt;.001   0.086  0.335  ***
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -388,14 +388,14 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2:3): 
-## QM(df = 2) = 10.823, p-val = 0.004
+## QM(df = 2) = 6.118, p-val = 0.047
 ## 
 ## Model Results:
 ## 
-##                     estimate     se   zval   pval  ci.lb  ci.ub    
-## intrcpt                0.065  0.033  1.976  0.048  0.001  0.129   *
-## normcatDescriptive     0.187  0.067  2.780  0.005  0.055  0.319  **
-## normcatPersonal        0.140  0.057  2.469  0.014  0.029  0.251   *
+##                     estimate     se   zval   pval   ci.lb  ci.ub   
+## intrcpt                0.080  0.048  1.663  0.096  -0.014  0.174  .
+## normcatDescriptive     0.170  0.074  2.286  0.022   0.024  0.315  *
+## normcatPersonal        0.121  0.062  1.962  0.050   0.000  0.243  *
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -409,14 +409,14 @@ $(document).ready(function () {
 ## QE(df = 0) = 0.000, p-val = 1.000
 ## 
 ## Test of Moderators (coefficient(s) 2:3): 
-## QM(df = 2) = 0.770, p-val = 0.681
+## QM(df = 2) = 10.479, p-val = 0.005
 ## 
 ## Model Results:
 ## 
-##                     estimate     se   zval   pval   ci.lb  ci.ub   
-## intrcpt                0.110  0.108  1.021  0.307  -0.101  0.321   
-## normcatDescriptive     0.058  0.122  0.476  0.634  -0.181  0.297   
-## normcatPersonal        0.142  0.162  0.876  0.381  -0.176  0.460   
+##                     estimate     se   zval   pval   ci.lb  ci.ub    
+## intrcpt                0.018  0.026  0.680  0.497  -0.033  0.068    
+## normcatDescriptive     0.101  0.036  2.838  0.005   0.031  0.171  **
+## normcatPersonal        0.285  0.150  1.901  0.057  -0.009  0.578   .
 ## 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
