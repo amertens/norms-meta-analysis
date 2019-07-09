@@ -64,7 +64,6 @@ meta_clean <- function(d, strat=T, pool_method="REML"){
            pval_se = abs(est)/abs(qnorm(pval)),
            se = ifelse(is.na(se), pval_se, se))
   summary(d$se)
-  #summary(d$se_raw)
   summary(d$pval_se)
   
   #Compare reported vs. pvalue calculates SE where possible

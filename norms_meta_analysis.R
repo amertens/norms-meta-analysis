@@ -178,19 +178,17 @@ resAll <- meta_clean(d.all)
 # Plot meta-analysis forest plots
 #------------------------------------------
 
-p.SN <- forest_plot(resSN$plotdf, strat=F)
-#p.SN
+# p.SN <- forest_plot(resSN$plotdf, strat=F)
+# p.PN <- forest_plot(resPN$plotdf, title="Subjective + Personal Norms")
+# p.DN <- forest_plot(resDN$plotdf, title="Subjective + Descriptive Norms")
+# p.all <- forest_plot(resAll$plotdf, title="Subjective, Personal, and Descriptive Norms")
 
-p.PN <- forest_plot(resPN$plotdf, title="Subjective + Personal Norms")
-p.DN <- forest_plot(resDN$plotdf, title="Subjective + Descriptive Norms")
-p.all <- forest_plot(resAll$plotdf, title="Subjective, Personal, and Descriptive Norms")
-
-h=10
-w=14
-ggsave(p.SN, file=paste0(here(),"/figures/forest_subject_norms.jpg"), height=h, width=w)
-ggsave(p.PN, file=paste0(here(),"/figures/forest_subject_personal_norms.jpg"), height=h, width=w)
-ggsave(p.DN, file=paste0(here(),"/figures/forest_subject_descriptive_norms.jpg"), height=h, width=w)
-ggsave(p.all, file=paste0(here(),"/figures/forest_subject_personal_descriptive_norms.jpg"), height=h, width=w)
+# h=10
+# w=14
+# ggsave(p.SN, file=paste0(here(),"/figures/forest_subject_norms.jpg"), height=h, width=w)
+# ggsave(p.PN, file=paste0(here(),"/figures/forest_subject_personal_norms.jpg"), height=h, width=w)
+# ggsave(p.DN, file=paste0(here(),"/figures/forest_subject_descriptive_norms.jpg"), height=h, width=w)
+# ggsave(p.all, file=paste0(here(),"/figures/forest_subject_personal_descriptive_norms.jpg"), height=h, width=w)
 
 
 #------------------------------------------------
@@ -216,28 +214,28 @@ saveRDS(df, file=here("results/pooled_results.Rdata"))
 # Plot pooled estimate comparison
 #-------------------------------------------
 
-p <- ggplot(df, aes(x=normcat2)) + 
-  geom_point(aes(y=est,  color=cat), size = 4) +
-  geom_linerange(aes(ymin=ci.lb, ymax=ci.ub, color=cat)) +
-  facet_wrap(~type, scales = "free_x") +
-  labs(x = "", y = "Standardized coefficient") +
-  geom_hline(yintercept = 0) +
-  geom_text(aes(y=est+0.15, label=pooled_label)) +
-  scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
-  theme(
-    strip.background = element_blank(),
-    legend.position="none",
-    plot.title = element_text(size = 16, face = "bold"),
-    strip.text = element_text(size=14),
-    axis.title = element_text(size=12),
-    axis.text.y = element_text(size=10),
-    axis.text.x = element_text(size=10, angle = 45, hjust = 0.5, vjust=0.5)
-  ) +
-  ggtitle("") + 
-  guides(color=FALSE, shape=FALSE) 
-p
-
-ggsave(p, file=paste0(here(),"/figures/pooled_estimate_comparisons.jpg"), height=18, width=14)
+# p <- ggplot(df, aes(x=normcat2)) + 
+#   geom_point(aes(y=est,  color=cat), size = 4) +
+#   geom_linerange(aes(ymin=ci.lb, ymax=ci.ub, color=cat)) +
+#   facet_wrap(~type, scales = "free_x") +
+#   labs(x = "", y = "Standardized coefficient") +
+#   geom_hline(yintercept = 0) +
+#   geom_text(aes(y=est+0.15, label=pooled_label)) +
+#   scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
+#   theme(
+#     strip.background = element_blank(),
+#     legend.position="none",
+#     plot.title = element_text(size = 16, face = "bold"),
+#     strip.text = element_text(size=14),
+#     axis.title = element_text(size=12),
+#     axis.text.y = element_text(size=12),
+#     axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
+#   ) +
+#   ggtitle("") + 
+#   guides(color=FALSE, shape=FALSE) 
+# p
+# 
+# ggsave(p, file=paste0(here(),"/figures/pooled_estimate_comparisons.jpg"), height=18, width=14)
 
 
 
@@ -245,13 +243,15 @@ ggsave(p, file=paste0(here(),"/figures/pooled_estimate_comparisons.jpg"), height
 df$cat <- factor(df$cat, levels=c("Overall",  "Household conservation","Green consumerism", "Everyday Public Conservation", "FFA"))
 df$normcat <- factor(df$normcat, levels = c("Subjective", "Personal", "Descriptive"))
 
+
+
 p_SN <- ggplot(df[df$type=="Subjective only",], aes(x=cat)) + 
   geom_point(aes(y=est,  color=cat), size = 4) +
   geom_linerange(aes(ymin=ci.lb, ymax=ci.ub, color=cat)) +
   facet_wrap(~type, scales = "free_x") +
   labs(x = "", y = "Standardized coefficient") +
   geom_hline(yintercept = 0) +
-  geom_text(aes(y=est+0.15, label=pooled_label)) +
+  geom_text(aes(y=est, label=pooled_label), position = position_nudge(x = 0.4)) +
   scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
   theme(
     strip.background = element_blank(),
@@ -259,22 +259,22 @@ p_SN <- ggplot(df[df$type=="Subjective only",], aes(x=cat)) +
     plot.title = element_text(size = 16, face = "bold"),
     strip.text = element_text(size=14),
     axis.title = element_text(size=12),
-    axis.text.y = element_text(size=10),
-    axis.text.x = element_text(size=10, angle = 45, hjust = 0.5, vjust=0.5)
+    axis.text.y = element_text(size=12),
+    axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
   ) +
-  ggtitle("Subjective only") + 
   guides(color=FALSE, shape=FALSE) 
-p_SN
 
+dsub <- df[df$type=="Subjective + Personal",]
+levels(dsub$cat)[2] <- "Household\nconservation" 
+levels(dsub$cat)[4] <- "Everyday Public\nConservation"
 
-
-p_PN <- ggplot(df[df$type=="Subjective + Personal",], aes(x=normcat)) + 
+p_PN <- ggplot(dsub, aes(x=normcat)) + 
   geom_point(aes(y=est,  color=cat), size = 4) +
   geom_linerange(aes(ymin=ci.lb, ymax=ci.ub, color=cat)) +
-  facet_wrap(~cat, scales = "free_x") +
+  facet_wrap(~cat, scales = "free_x", nrow=1) +
   labs(x = "", y = "Standardized coefficient") +
   geom_hline(yintercept = 0) +
-  geom_text(aes(y=est+0.15, label=pooled_label)) +
+  geom_text(aes(y=est, label=pooled_label), position = position_nudge(x = 0.35)) +
   scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
   theme(
     strip.background = element_blank(),
@@ -282,12 +282,11 @@ p_PN <- ggplot(df[df$type=="Subjective + Personal",], aes(x=normcat)) +
     plot.title = element_text(size = 16, face = "bold"),
     strip.text = element_text(size=14),
     axis.title = element_text(size=12),
-    axis.text.y = element_text(size=10),
-    axis.text.x = element_text(size=10, angle = 45, hjust = 0.5, vjust=0.5)
+    axis.text.y = element_text(size=12),
+    axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
   ) +
-  ggtitle("Subjective + Personal") + 
   guides(color=FALSE, shape=FALSE) 
-p_PN
+
 
 drop_cats =c("Everyday Public Conservation", "FFA")
 p_DN <- ggplot(df[df$type=="Subjective + Descriptive" & !(df$cat %in% drop_cats),], aes(x=normcat)) + 
@@ -296,7 +295,7 @@ p_DN <- ggplot(df[df$type=="Subjective + Descriptive" & !(df$cat %in% drop_cats)
   facet_wrap(~cat, scales = "free_x") +
   labs(x = "", y = "Standardized coefficient") +
   geom_hline(yintercept = 0) +
-  geom_text(aes(y=est+0.15, label=pooled_label)) +
+  geom_text(aes(y=est, label=pooled_label), position = position_nudge(x = 0.2)) +
   scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
   theme(
     strip.background = element_blank(),
@@ -304,12 +303,11 @@ p_DN <- ggplot(df[df$type=="Subjective + Descriptive" & !(df$cat %in% drop_cats)
     plot.title = element_text(size = 16, face = "bold"),
     strip.text = element_text(size=14),
     axis.title = element_text(size=12),
-    axis.text.y = element_text(size=10),
-    axis.text.x = element_text(size=10, angle = 45, hjust = 0.5, vjust=0.5)
+    axis.text.y = element_text(size=12),
+    axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
   ) +
-  ggtitle("Subjective + Descriptive") + 
   guides(color=FALSE, shape=FALSE) 
-p_DN
+
 
 p_all <- ggplot(df[df$type=="Subjective, Descriptive, + Personal" & !(df$cat %in% drop_cats),], aes(x=normcat)) + 
   geom_point(aes(y=est,  color=cat), size = 4) +
@@ -317,7 +315,7 @@ p_all <- ggplot(df[df$type=="Subjective, Descriptive, + Personal" & !(df$cat %in
   facet_wrap(~cat, scales = "free_x") +
   labs(x = "", y = "Standardized coefficient") +
   geom_hline(yintercept = 0) +
-  geom_text(aes(y=est+0.15, label=pooled_label)) +
+  geom_text(aes(y=est, label=pooled_label), position = position_nudge(x = 0.2)) +
   scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
   theme(
     strip.background = element_blank(),
@@ -325,17 +323,16 @@ p_all <- ggplot(df[df$type=="Subjective, Descriptive, + Personal" & !(df$cat %in
     plot.title = element_text(size = 16, face = "bold"),
     strip.text = element_text(size=14),
     axis.title = element_text(size=12),
-    axis.text.y = element_text(size=10),
-    axis.text.x = element_text(size=10, angle = 45, hjust = 0.5, vjust=0.5)
+    axis.text.y = element_text(size=12),
+    axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
   ) +
-  ggtitle("Subjective, Descriptive, + Personal") + 
   guides(color=FALSE, shape=FALSE) 
-p_all
 
-ggsave(p_SN, file=paste0(here(),"/figures/pooled_estimate_comparisons_SN.jpg"), height=5, width=7)
-ggsave(p_PN, file=paste0(here(),"/figures/pooled_estimate_comparisons_PN.jpg"), height=5, width=7)
-ggsave(p_DN, file=paste0(here(),"/figures/pooled_estimate_comparisons_DN.jpg"), height=5, width=7)
-ggsave(p_all, file=paste0(here(),"/figures/pooled_estimate_comparisons_all.jpg"), height=5, width=7)
+
+ggsave(p_SN, file=paste0(here(),"/figures/pooled_estimate_comparisons_SN.jpg"), height=8, width=10)
+ggsave(p_PN, file=paste0(here(),"/figures/pooled_estimate_comparisons_PN.jpg"), height=8, width=10)
+ggsave(p_DN, file=paste0(here(),"/figures/pooled_estimate_comparisons_DN.jpg"), height=8, width=10)
+ggsave(p_all, file=paste0(here(),"/figures/pooled_estimate_comparisons_all.jpg"), height=8, width=10)
 
 
 
