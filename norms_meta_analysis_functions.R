@@ -78,10 +78,11 @@ meta_clean <- function(d, strat=T, pool_method="REML"){
     for(i in 1:length(stratcats)){
       
       dsub <- d[d$normcat==stratcats[i],]
+      
+      fit <- rma_robust(data=dsub, yi="est", sei="se", method=pool_method, measure="GEN")
+      
       dsub <- dsub %>% group_by(cat) %>% mutate(N=n()) %>% ungroup() %>% filter(N>3)
 
-      fit<-rma_robust(data=dsub, yi="est", sei="se", method=pool_method, measure="GEN")
-      
       fit_FFA<-fit_GC<-fit_HC<-fit_CA<-fit_EPC<-NULL
       
       try(fit_FFA<-rma_robust(data=dsub[dsub$cat=="FFA" & !is.na(dsub$cat),], yi="est", sei="se", method=pool_method, measure="GEN"))
@@ -114,7 +115,7 @@ meta_clean <- function(d, strat=T, pool_method="REML"){
     
     df <- bind_rows(res, study_res, study_res_pooled)
     
-    df <- df %>% group_by(normcat, cat) %>% mutate(N=n()) %>% ungroup() %>% filter(N>3)
+    df <- df %>% group_by(normcat, cat) %>% mutate(N=n()) %>% ungroup() 
     
   }else{
     

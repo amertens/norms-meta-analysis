@@ -16,9 +16,10 @@ source(paste0(here(),"/norms_meta_analysis_functions.R"))
 #-------------------------------------------
 
 d.SN <- read_excel(paste0(here(), "/data/Coding - Norms Paper.xlsx"), sheet = "SN Only")
+colnames(d.SN)
 
 #fill in empty rows
-d.SN <- d.SN %>% fill("Folder","Paper title","Reason for not including",
+d.SN <- d.SN %>% fill("X__1", "Paper title","Reason for not including",
                         "Paper Year","Authors","Category",
                         "Behavioral Intention(s)","N (number surveyed)")
 
@@ -264,6 +265,26 @@ p_SN <- ggplot(df[df$type=="Subjective only",], aes(x=cat)) +
   ) +
   guides(color=FALSE, shape=FALSE) 
 
+
+p_DN <- ggplot(df[df$type=="Subjective + Descriptive",], aes(x=normcat)) + 
+  geom_point(aes(y=est,  color=normcat), size = 4) +
+  geom_linerange(aes(ymin=ci.lb, ymax=ci.ub, color=normcat)) +
+  labs(x = "", y = "Standardized coefficient") +
+  geom_hline(yintercept = 0) +
+  geom_text(aes(y=est, label=pooled_label), position = position_nudge(x = 0.4)) +
+  scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
+  theme(
+    strip.background = element_blank(),
+    legend.position="none",
+    plot.title = element_text(size = 16, face = "bold"),
+    strip.text = element_text(size=14),
+    axis.title = element_text(size=12),
+    axis.text.y = element_text(size=12),
+    axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
+  ) +
+  guides(color=FALSE, shape=FALSE) +
+  ggtitle("Subjective + Descriptive")
+
 dsub <- df[df$type=="Subjective + Personal",]
 levels(dsub$cat)[2] <- "Household\nconservation" 
 levels(dsub$cat)[4] <- "Everyday Public\nConservation"
@@ -289,25 +310,6 @@ p_PN <- ggplot(dsub, aes(x=normcat)) +
 
 
 drop_cats =c("Everyday Public Conservation", "FFA")
-p_DN <- ggplot(df[df$type=="Subjective + Descriptive" & !(df$cat %in% drop_cats),], aes(x=normcat)) + 
-  geom_point(aes(y=est,  color=cat), size = 4) +
-  geom_linerange(aes(ymin=ci.lb, ymax=ci.ub, color=cat)) +
-  facet_wrap(~cat, scales = "free_x") +
-  labs(x = "", y = "Standardized coefficient") +
-  geom_hline(yintercept = 0) +
-  geom_text(aes(y=est, label=pooled_label), position = position_nudge(x = 0.2)) +
-  scale_colour_manual(values=tableau10, name = "Pooled", drop=F) +
-  theme(
-    strip.background = element_blank(),
-    legend.position="none",
-    plot.title = element_text(size = 16, face = "bold"),
-    strip.text = element_text(size=14),
-    axis.title = element_text(size=12),
-    axis.text.y = element_text(size=12),
-    axis.text.x = element_text(size=12, angle = 10, hjust = 0.5, vjust=0.5)
-  ) +
-  guides(color=FALSE, shape=FALSE) 
-
 
 p_all <- ggplot(df[df$type=="Subjective, Descriptive, + Personal" & !(df$cat %in% drop_cats),], aes(x=normcat)) + 
   geom_point(aes(y=est,  color=cat), size = 4) +

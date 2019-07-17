@@ -52,19 +52,6 @@ resSD_overall <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df
 resSD_overall
 ```
 
-##### Household conservation
-
-```{r, echo=F}
-resSD_HC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Household conservation",], digits=3)
-resSD_HC
-```
-
-##### Green consumerism
-
-```{r, echo=F}
-resSD_GC <- rma(yi=est, vi=vi, mods = ~ normcat, method="FE", data=df.SD[df.SD$cat=="Green consumerism",], digits=3)
-resSD_GC
-```
 
 ### Subjective + Personal
 
